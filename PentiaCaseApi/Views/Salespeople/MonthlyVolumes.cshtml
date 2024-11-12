@@ -1,0 +1,54 @@
+﻿@model List<PentiaCaseApi.Models.MonthlyVolume>
+
+<h1>Monthly Order Volume</h1>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Order Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var volume in Model)
+        {
+            <tr>
+                <td>@volume.month</td>
+                <td>@volume.OrderCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h2>Order Volume by Month (Graph)</h2>
+<canvas id="orderVolumeChart" width="400" height="200"></canvas>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+    const ctx = document.getElementById('orderVolumeChart').getContext('2d');
+    const orderVolumeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [@string.Join(",", Model.Select(v => $"'{v.month}'"))], 
+            datasets: [{
+                label: 'Order Count',
+                data: [@string.Join(",", Model.Select(v => v.OrderCount))], 
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', 
+                borderColor: 'rgba(75, 192, 192, 1)', 
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

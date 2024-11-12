@@ -1,1 +1,25 @@
-﻿<p>hej hej</p>
+﻿@using PentiaCaseApi.Models
+@model List<PentiaCaseApi.Models.Salesperson>
+
+<h1>Salespeople</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Order Count</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var salesperson in Model)  
+        {
+            <tr>
+                <td>@salesperson.name</td>  
+                <td>@salesperson.OrderCount</td> 
+                <td>
+                    <a href="@Url.Action("Details", "Salespeople", new { id = salesperson.id })">View Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

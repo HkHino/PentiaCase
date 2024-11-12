@@ -1,3 +1,5 @@
+using PentiaCaseApi.Models;
+
 namespace PentiaCaseApi
 {
     public class Program
@@ -5,6 +7,8 @@ namespace PentiaCaseApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
             builder.Services.AddControllersWithViews();
 
@@ -20,6 +24,10 @@ namespace PentiaCaseApi
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}");
+
+            app.MapControllerRoute(
+                name: "details",
+                pattern: "{controller=Salespeople}/{action=Details}/{id}");
 
             app.Run();
         }
